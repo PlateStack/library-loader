@@ -28,7 +28,7 @@ import java.util.Comparator;
 public class LibraryClassLoaderTest
 {
     @Test
-    public void createClassLoader() throws Exception
+    public void singleDependencyWithMd5AndSha1() throws Exception
     {
         Path tempDirectory = Files.createTempDirectory("downloads_");
         try
