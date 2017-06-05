@@ -28,12 +28,9 @@ import org.apache.ivy.core.settings.IvySettings;
 import org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorWriter;
 import org.apache.ivy.plugins.resolver.ChainResolver;
 import org.apache.ivy.plugins.resolver.IBiblioResolver;
-import org.apache.ivy.plugins.resolver.URLResolver;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
@@ -79,6 +76,14 @@ final public class LibraryResolver
         resolver.setUsepoms(true);
         resolver.setUseMavenMetadata(true);
         resolver.setRoot("https://jcenter.bintray.com/");
+        chain.add(resolver);
+
+        resolver = new IBiblioResolver();
+        resolver.setName("herd");
+        resolver.setM2compatible(true);
+        resolver.setUsepoms(true);
+        resolver.setUseMavenMetadata(true);
+        resolver.setRoot("https://modules.ceylon-lang.org/maven/1/");
         chain.add(resolver);
 
         settings.addResolver(chain);
@@ -170,17 +175,5 @@ final public class LibraryResolver
         final ResolveReport report = ivy.resolve(ivyFile.toURI().toURL(), resolveOptions);
 
         return report.getAllArtifactsReports();
-    }
-
-    private synchronized void addMavenRepository(final String name, final String repository) throws MalformedURLException
-    {
-        new URL(repository);
-        if(!repository.endsWith("/")) throw new IllegalArgumentException("The repository URL must ends with '/' Repository: \""+repository+"\"");
-        URLResolver resolver = new URLResolver();
-
-        resolver.setM2compatible(true);
-        resolver.setName(name);
-        resolver.addArtifactPattern(repository+"[organisation]/[module]/[revision]/[artifact](-[revision]).[ext]");
-        settings.addResolver(resolver);
     }
 }
