@@ -6,6 +6,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Method to download libraries to a local directory
+- Maven dependency resolution powered by Apache Ivy
 
 [Unreleased]: https://github.com/PlateStack/library-loader/compare/v0.0.0...HEAD
