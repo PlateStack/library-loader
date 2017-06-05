@@ -90,6 +90,11 @@ final public class LibraryResolver
         settings.setDefaultResolver(chain.getName());
     }
 
+    public static void setUserDir(final File file)
+    {
+        getInstance().settings.setDefaultIvyUserDir(file);
+    }
+
     public static List<MavenArtifact> readArtifacts(final Path file) throws IOException
     {
         return readArtifacts(Files.readAllLines(file).stream());
